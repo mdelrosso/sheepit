@@ -77,6 +77,11 @@
         {
             event.preventDefault();
 
+            // Before remove current callBack function
+            if (typeof options.beforeRemoveCurrent === "function") {
+                options.beforeRemoveCurrent(source);
+            }
+            
             if (options.removeCurrentConfirmation) {
                 if ( confirm(options.removeCurrentConfirmationMsg) ) {
                     removeCurrentForm($(this).data('removableClone'));
@@ -87,7 +92,7 @@
             
             // After remove current callBack function
             if (typeof options.afterRemoveCurrent === "function") {
-                options.afterRemoveCurrent();
+                options.afterRemoveCurrent(source);
             }
         }
 
@@ -1404,30 +1409,31 @@
                 noFormsTemplateSelector: '#' + $(this).attr("id") + '_noforms_template',
                 separator: '<div style="width:100%; border-top:1px solid #ff0000; margin: 10px 0px;"></div>',
 
-                // Limits
-                iniFormsCount: 1,
-                maxFormsCount: 20,
-                minFormsCount: 1,
-                incrementCount: 1 ,
-                noFormsMsg: 'No forms to display',
+            // Limits
+            iniFormsCount: 1,
+            maxFormsCount: 20,
+            minFormsCount: 1,
+            incrementCount: 1 ,
+            noFormsMsg: 'No forms to display',
 
-                // Id and names management
-                indexFormat:'#index#',
+            // Id and names management
+            indexFormat:'#index#',
 
-                // Advanced options
-                data: [],
-                pregeneratedForms: [],
-                nestedForms: [],
-                isNestedForm: false,
-                parentForm: {},
-                beforeClone: function() {},
-                afterClone: function() {},
-                beforeAdd: function() {},
-                afterAdd: function() {},
-                afterFill: function() {},
-                afterRemoveCurrent: function(){},
-                insertNewForms: 'after'
-            };
+            // Advanced options
+            data: [],
+            pregeneratedForms: [],
+            nestedForms: [],
+            isNestedForm: false,
+            parentForm: {},
+            beforeClone: function() {},
+            afterClone: function() {},
+            beforeAdd: function() {},
+            afterAdd: function() {},
+            afterFill: function() {},
+            afterRemoveCurrent: function(){},
+            beforeRemoveCurrent: function(){},
+            insertNewForms: 'after'
+        };
 
 
         setOptions(options);
