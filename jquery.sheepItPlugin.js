@@ -84,6 +84,11 @@
             } else {
                 removeCurrentForm($(this).data('removableClone'));
             }
+            
+            // After remove current callBack function
+            if (typeof options.afterRemoveCurrent === "function") {
+                options.afterRemoveCurrent();
+            }
         }
 
         /**
@@ -868,6 +873,9 @@
                 form = $('#'+index);
                 fillForm(form, values);
             }
+            if (typeof options.afterFill === "function") {
+                options.afterFill(source, form, values);
+            }
                 
         }
 
@@ -1416,6 +1424,8 @@
                 afterClone: function() {},
                 beforeAdd: function() {},
                 afterAdd: function() {},
+                afterFill: function() {},
+                afterRemoveCurrent: function(){},
                 insertNewForms: 'after'
             };
 
