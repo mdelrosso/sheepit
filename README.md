@@ -4,8 +4,8 @@ What is SheepIt!?
 SheepIt! is a jQuery plugin that allows you to clone form elements dynamically.
 
 It is very useful to develop advanced forms that require the same type of load data multiple times.
-Like: 
-A Person -> Has multiple Addresses -> Has multiple phones 
+
+Like: A Person -> Has multiple Addresses -> Has multiple phones 
 
 HomePage: http://www.mdelrosso.com/sheepit/
 
