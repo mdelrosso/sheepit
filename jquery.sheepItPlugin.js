@@ -131,6 +131,17 @@
 
 
         }
+        
+        function getOrSetTemplate(element, attrname){
+          var template=element.attr(attrname+"template");
+          if(template) {
+            return unescape(template);
+          }
+          var att=element.attr(attrname);
+          // Hide index occurrences inside the template (todo: better escaping method)      
+          element.attr(attrname+"template", escape(att));
+          return att;
+        }
 
         /**
          * Get a form and normalize fields id and names to match the current position
@@ -138,16 +149,18 @@
         function normalizeFieldsForForm(form, index)
         {
             form.find(formFields).each(function(){
-                var that = $(this),
-                    idAttr = that.attr("id"),
-                    nameAttr = that.attr("name");
-
+                var that = $(this)
+                    ,idTemplateAttr = getOrSetTemplate(that,"id")
+                    ,nameTemplateAttr = getOrSetTemplate(that, "name")
+                    ,idAttr = that.attr("id")
+                    ,nameAttr = that.attr("name")
+                    
                 /* Normalize field name attributes */
-                newNameAttr = nameAttr.replace(options.indexFormat, index);
+                newNameAttr = nameTemplateAttr.replace(options.indexFormat, index);
                 that.attr("name", newNameAttr);
 
                 /* Normalize field id attributes */
-                newIdAttr = idAttr.replace(options.indexFormat, index);
+                newIdAttr = idTemplateAttr.replace(options.indexFormat, index);
 
                 form.find("label[for='"+idAttr+"']").each(function(){
                         $(this).attr("for", newIdAttr);
@@ -226,7 +239,12 @@
                 removeAll.hideIf();
             }
 
-            if (add.css('display') != 'none' || addN.css('display') != 'none' || removeAll.css('display') != 'none' || removeLast.css('display') != 'none') {
+            if (
+                   add.css('display') != 'none'
+                || addN.css('display') != 'none'
+                || removeAll.css('display') != 'none'
+                || removeLast.css('display') != 'none'
+            ) {
                 controls.show();
             } else {
                 controls.hide();
@@ -238,29 +256,46 @@
          */
         function normalizeForms()
         {
-            (hasForms()) ? noFormsTemplate.hide() : noFormsTemplate.show();
+          if(hasForms()){
+            noFormsTemplate.hide();
+            if(options.continuousIndex){
+              var index=0
+                , form=getFirstForm();
+              do{
+                normalizeForm(form, index);
+                index++;
+                form = getNextForm(form);
+              }while (form!=false)
+            }
+          }else{
+            noFormsTemplate.show();
+          }
         }
 
-        function normalizeForm(form)
+        function normalizeForm(form, index)
         {
-            
+            if(typeof index == 'undefined'){
+              index=getIndex();
+            }
+            var idTemplate=getOrSetTemplate(form, "id");
+
             // Normalize form id
             if (form.attr("id")) {
-                form.attr("id", template.attr("id") + getIndex());
+                form.attr("id", idTemplate + index);
             }
 
             // Normalize indexes for fields name and id attributes
-            normalizeFieldsForForm(form, getIndex());
+            normalizeFieldsForForm(form, index);
 
             // Normalize labels
-            normalizeLabelsForForm(form, getIndex());
+            normalizeLabelsForForm(form, index);
 
             // Normalize other possibles indexes inside html
             if (form.html().indexOf(options.indexFormat) != -1) {
                 // Create a javascript regular expression object
                 var re = new RegExp(options.indexFormat,"ig");
                 // Replace all index occurrences inside the html
-                form.html(form.html().replace(re, getIndex()));
+                form.html(form.html().replace(re, index));
             }
 
             // Remove current
@@ -322,7 +357,10 @@
             if (canAddForm() && newForm) {
                 
                 // New form initialization
-                newForm = normalizeForm(newForm);
+                // if index has to be continuous, all items are renumbered during normalizeAll() call  
+                if(!options.continuousIndex){
+                  newForm = normalizeForm(newForm);
+                }
 
                 // Remove current control
                 var removeCurrentBtn = newForm.find(options.removeCurrentSelector).first();
@@ -525,6 +563,10 @@
 
         }
 
+
+
+        /*---------------- ITERATOR METHODS ----------------*/
+
         /**
          * Gets the current internal pointer
          */
@@ -714,6 +756,8 @@
         {
             return forms.length;
         }
+
+        /*---------------- /ITERATOR METHODS ----------------*/
 
         function getFormsCount()
         {
@@ -1022,7 +1066,7 @@
 
         function hasSeparator()
         {
-            if (options.separator !== '') {
+            if (options.separator != '') {
                 return true;
             } else {
                 return false;
@@ -1411,16 +1455,16 @@
 
             // Limits
             iniFormsCount: 1,
-            maxFormsCount: 20,
+            maxFormsCount: 20, // 0 = no limit
             minFormsCount: 1,
-            incrementCount: 1 ,
+            incrementCount: 1 , // add N forms at one time
             noFormsMsg: 'No forms to display',
 
             // Id and names management
             indexFormat:'#index#',
 
             // Advanced options
-            data: [],
+            data: [], // A JSON based representation of the data which will prefill the form (equivalent of the inject method)
             pregeneratedForms: [],
             nestedForms: [],
             isNestedForm: false,
@@ -1432,7 +1476,8 @@
             afterFill: function() {},
             afterRemoveCurrent: function(){},
             beforeRemoveCurrent: function(){},
-            insertNewForms: 'after'
+            insertNewForms: 'after',
+	    continuousIndex: true //Keep index continuous and starting from 0 
         };
 
 
