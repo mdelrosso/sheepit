@@ -1106,14 +1106,14 @@
             /**
              * Controls
              */
-            add = source.find(options.addSelector);
-            addN = source.find(options.addNSelector);
-            addNInput = source.find(options.addNInputSelector);
-            addNButton = source.find(options.addNButtonSelector);
-            removeLast = source.find(options.removeLastSelector);
-            removeCurrent = source.find(options.removeCurrentSelector);
-            removeAll = source.find(options.removeAllSelector);
-            controls = source.find(options.controlsSelector);
+            add = $(options.addSelector);
+            addN = $(options.addNSelector);
+            addNInput = $(options.addNInputSelector);
+            addNButton = $(options.addNButtonSelector);
+            removeLast = $(options.removeLastSelector);
+            removeCurrent = $(options.removeCurrentSelector);
+            removeAll = $(options.removeAllSelector);
+            controls = $(options.controlsSelector);
 
             if (add.length == 0) {
                 options.allowAdd = false;
