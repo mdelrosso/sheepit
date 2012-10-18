@@ -1477,7 +1477,7 @@
             afterRemoveCurrent: function(){},
             beforeRemoveCurrent: function(){},
             insertNewForms: 'after',
-	    continuousIndex: true //Keep index continuous and starting from 0 
+            continuousIndex: true //Keep index continuous and starting from 0 
         };
 
 
