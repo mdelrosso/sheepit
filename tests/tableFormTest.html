@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+      SheepIt! Jquery Form Cloning Plugin - Table Forms Test
+    </title>
+    <!-- <script type="text/javascript" src="jquery-1.4.4.min.js"></script> -->
+    <!-- <script type="text/javascript" src="jquery-1.4.3.min.js"></script> -->
+    <!-- <script type="text/javascript" src="jquery-1.4.2.min.js"></script> -->
+    <!-- <script type="text/javascript" src="jquery-1.4.1.min.js"></script> -->
+
+    <script type="text/javascript" src="resources/js/jquery/jquery-1.4.min.js"></script>
+    <script type="text/javascript" src="../jquery.sheepItPlugin.js"></script>
+    <script type="text/javascript">
+//<![CDATA[
+
+    $(document).ready(function() {
+     
+    var sheepItForm = $('#sheepItForm').sheepIt({
+        separator: '',
+        allowRemoveLast: true,
+        allowRemoveCurrent: true,
+        allowRemoveAll: true,
+        allowAdd: true,
+        allowAddN: true,
+        maxFormsCount: 10,
+        minFormsCount: 0,
+        iniFormsCount: 2,
+        continuousIndex: true
+    });
+
+    });
+
+    //]]>
+    </script>
+    <style type="text/css">
+/*<![CDATA[*/
+
+    a {
+    text-decoration:underline;
+    color:#00F;
+    cursor:pointer;
+    }
+
+    #sheepItForm_controls div, #sheepItForm_controls div input {
+    float:left;    
+    margin-right: 10px;
+    }
+
+    td {
+      padding:4px;
+    }
+
+    /*]]>*/
+    </style>
+  </head>
+  <body>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <td>
+              &nbsp;
+            </td>
+            <td>
+              Phone
+            </td>
+            <td>
+              Description
+            </td>
+            <td>
+              &nbsp;
+            </td>
+          </tr>
+        </thead><!-- sheepIt Form -->
+        <tbody id="sheepItForm">
+          <!-- Form template-->
+          <tr id="sheepItForm_template">
+            <td>
+              <span id="sheepItForm_label"></span>
+            </td>
+            <td>
+              <input id="sheepItForm_#index#_phone" name="person[phones][#index#][phone]" type="text" size="15" maxlength="10" />
+            </td>
+            <td>
+              <input id="sheepItForm_#index#_description" name="person[phones][#index#][description]" type="text" size="50" maxlength="50" />
+            </td>
+            <td>
+              <a id="sheepItForm_remove_current" name="sheepItForm_remove_current"><img class="delete" src="resources/images/cross.png" width="16" height="16" border="0" /></a>
+            </td>
+          </tr><!-- /Form template-->
+          <!-- No forms template -->
+          <tr id="sheepItForm_noforms_template">
+            <td colspan="4">
+              No records
+            </td>
+          </tr><!-- /No forms template-->
+        </tbody><!-- /sheepIt Form -->
+      </table><!-- Controls -->
+      <div id="sheepItForm_controls">
+        <div id="sheepItForm_add">
+          <a><span>Add</span></a>
+        </div>
+        <div id="sheepItForm_remove_last">
+          <a><span>Remove</span></a>
+        </div>
+        <div id="sheepItForm_remove_all">
+          <a><span>Remove all</span></a>
+        </div>
+        <div id="sheepItForm_add_n">
+          <input id="sheepItForm_add_n_input" type="text" size="4" />
+          <div id="sheepItForm_add_n_button">
+            <a><span>Add</span></a>
+          </div>
+        </div>
+      </div><!-- /Controls -->
+    </div>
+  </body>
+</html>
