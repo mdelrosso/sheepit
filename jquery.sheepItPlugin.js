@@ -4,6 +4,10 @@
  *
  * Created By Mariano Del Rosso (http://www.mdelrosso.com)
  *
+ * Thanks to:
+ *  Hubert Galuszka: Continuous index option and support for tabular forms
+ *  Gabriel Alonso: Bugfixes
+ *
  * @license
  * 
  * SheepIt is free software: you can redistribute it and/or modify
