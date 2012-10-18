@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>SheepIt! Jquery Form Cloning Plugin - Example 1</title>
+<!-- <script type="text/javascript" src="resources/js/jquery/jquery-1.4.4.min.js"></script> -->
+<!-- <script type="text/javascript" src="resources/js/jquery/jquery-1.4.3.min.js"></script> -->
+<!-- <script type="text/javascript" src="resources/js/jquery/jquery-1.4.2.min.js"></script> -->
+<!-- <script type="text/javascript" src="resources/js/jquery/jquery-1.4.1.min.js"></script> -->
+<script type="text/javascript" src="resources/js/jquery/jquery-1.4.min.js"></script>
+
+<script type="text/javascript" src="../jquery.sheepItPlugin.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+     
+    var sheepItForm = $('#sheepItForm').sheepIt({
+        separator: '',
+        allowRemoveLast: true,
+        allowRemoveCurrent: true,
+        allowRemoveAll: true,
+        allowAdd: true,
+        allowAddN: true,
+        maxFormsCount: 10,
+        minFormsCount: 0,
+        iniFormsCount: 2,
+        continuousIndex: true
+    });
+ 
+});
+
+</script>
+<style>
+
+a {
+    text-decoration:underline;
+    color:#00F;
+    cursor:pointer;
+}
+
+#sheepItForm_controls div, #sheepItForm_controls div input {
+    float:left;    
+    margin-right: 10px;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<!-- sheepIt Form -->
+<div id="sheepItForm">
+ 
+  <!-- Form template-->
+  <div id="sheepItForm_template">
+    <label for="sheepItForm_#index#_phone">Phone <span id="sheepItForm_label"></span></label>
+    <input id="sheepItForm_#index#_phone" name="person[phones][#index#][phone]" type="text" size="15" maxlength="10" />
+    <a id="sheepItForm_remove_current">
+      <img class="delete" src="resources/images/cross.png" width="16" height="16" border="0">
+    </a>
+  </div>
+  <!-- /Form template-->
+   
+  <!-- No forms template -->
+  <div id="sheepItForm_noforms_template">No phones</div>
+  <!-- /No forms template-->
+   
+  <!-- Controls -->
+  <div id="sheepItForm_controls">
+    <div id="sheepItForm_add"><a><span>Add phone</span></a></div>
+    <div id="sheepItForm_remove_last"><a><span>Remove</span></a></div>
+    <div id="sheepItForm_remove_all"><a><span>Remove all</span></a></div>
+    <div id="sheepItForm_add_n">
+      <input id="sheepItForm_add_n_input" type="text" size="4" />
+      <div id="sheepItForm_add_n_button"><a><span>Add</span></a></div></div>
+  </div>
+  <!-- /Controls -->
+   
+</div>
+<!-- /sheepIt Form -->
+
+
+</body>
+</html>
