@@ -261,16 +261,22 @@
         function normalizeForms()
         {
           if(hasForms()){
+              
             noFormsTemplate.hide();
-            if(options.continuousIndex){
+            
+            if(options.continuousIndex) {
+                
               var index=0
                 , form=getFirstForm();
+              
               do{
                 normalizeForm(form, index);
                 index++;
                 form = getNextForm(form);
               }while (form!=false)
             }
+            
+            
           }else{
             noFormsTemplate.show();
           }
@@ -278,16 +284,18 @@
 
         function normalizeForm(form, index)
         {
-            if(typeof index == 'undefined'){
-              index=getIndex();
+            if (typeof index == 'undefined') {
+                index=getIndex();
             }
+            
             var idTemplate=getOrSetTemplate(form, "id");
 
             // Normalize form id
             if (form.attr("id")) {
                 form.attr("id", idTemplate + index);
             }
-
+            
+            
             // Normalize indexes for fields name and id attributes
             normalizeFieldsForForm(form, index);
 
@@ -301,8 +309,7 @@
                 // Replace all index occurrences inside the html
                 form.html(form.html().replace(re, index));
             }
-
-            // Remove current
+            
             // Remove current form control
             var removeCurrent = form.find(options.removeCurrentSelector);
             (options.allowRemoveCurrent) ? removeCurrent.show() : removeCurrent.hide();
@@ -321,12 +328,15 @@
 
         /**
          * Add a new form to the collection
+         * 
+         * @parameter normalize: avoid normalize all forms if not necessary
          */
-        function addForm(normalize, form)
+        function addForm(normalizeAllafterAdd, form)
         {
-            if (typeof normalize == 'undefined') {
-                normalize = true;
+            if (typeof normalizeAllafterAdd == 'undefined') {
+                normalizeAllafterAdd = true;
             }
+            
             if (typeof form == 'undefined') {
                 form = false;
             }
@@ -360,11 +370,8 @@
 
             if (canAddForm() && newForm) {
                 
-                // New form initialization
-                // if index has to be continuous, all items are renumbered during normalizeAll() call  
-                if(!options.continuousIndex){
-                  newForm = normalizeForm(newForm);
-                }
+                newForm = normalizeForm(newForm);
+                
 
                 // Remove current control
                 var removeCurrentBtn = newForm.find(options.removeCurrentSelector).first();
@@ -375,6 +382,7 @@
                 
                 // Index
                 newForm.data('formIndex', getIndex());
+                
                 // Linked references (separators and forms)
                 newForm.data('previousSeparator',false);
                 newForm.data('nextSeparator',false);
@@ -426,7 +434,12 @@
                 
                 forms.push(newForm);
 
-                if (normalize) {
+                /**
+                 * If index has to be continuous,
+                 * all items are reindexed/renumbered using 
+                 * normalizeAll() after add a new form clone
+                 */
+                if (normalizeAllafterAdd || options.continuousIndex) {
                     normalizeAll();
                 }
 
@@ -903,8 +916,13 @@
             }
         }
 
+        /**
+         * Controls the whole process of data injection
+         *
+         */
         function fillData(index, values)
         {
+            
             var form = '';
 
             // Position
@@ -919,13 +937,16 @@
                 }
 
                 form = getForm(index);
+                
                 fillForm(form, values);
             } 
             // Form Id
             else if(typeof(index) == 'string') {
+                
                 form = $('#'+index);
                 fillForm(form, values);
             }
+            
             if (typeof options.afterFill === "function") {
                 options.afterFill(source, form, values);
             }
@@ -937,10 +958,12 @@
             var x = 0;
 
             // For each element, try to get the correct field or fields
-            $.each(data, function(index, value){
+            $.each(data, function(index, value) {
                 
                 var formId = source.attr('id');
                 var formIndex = form.data('formIndex');
+
+
 
                 // Replace form Id and form Index with current values
                 if (index.indexOf('#form#') != -1 || index.indexOf('#index#') != -1) {
@@ -950,7 +973,7 @@
                     index = formId + '_' + formIndex + '_' + index;
                 }
                 
-               
+              
 
                 /**
                  * Search for field (by id, by name, etc)
@@ -970,6 +993,8 @@
                         field = form.find(':input[name="' + index + '[]"]');
                     } 
                 }
+                
+                
 
                 // Field was found
                 if (field.length > 0) {
@@ -1019,15 +1044,17 @@
                 }
                 // Field not found in this form try search inside nested forms
                 else {
-                    if (form.data('nestedForms').length > 0) {
-                        x = 0;
-                        for (x in form.data('nestedForms')) {
-                            
-                            if (index == form.data('nestedForms')[x].attr('id') && typeof(value) == 'object') {
-                                form.data('nestedForms')[x].inject(value);
+                    if ( typeof(form.data('nestedForms')) != 'undefined') {
+                        if (form.data('nestedForms').length > 0) {
+                            x = 0;
+                            for (x in form.data('nestedForms')) {
+
+                                if (index == form.data('nestedForms')[x].attr('id') && typeof(value) == 'object') {
+                                    form.data('nestedForms')[x].inject(value);
+                                }
                             }
+
                         }
-                        
                     }
                 }
                 
@@ -1327,6 +1354,7 @@
 
                     /* ----- Advanced ----- */
                     inject: function(data) {
+                        
                         // Loop over each data using a Proxy (function , context)
                         $.each(data, $.proxy( fillData, source ));
                     }
