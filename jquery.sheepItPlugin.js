@@ -2,6 +2,8 @@
  * SheepIt! Jquery Plugin
  * http://www.mdelrosso.com/sheepit/
  *
+ * @version 1.1.1
+ *
  * Created By Mariano Del Rosso (http://www.mdelrosso.com)
  *
  * Thanks to:
