@@ -1070,7 +1070,7 @@
             var type = field.attr('type');
 
             // hidden, text, password
-            if (type == 'text' || type == 'hidden' || type == 'password') {
+            if (type == 'text' || type == 'hidden' || type == 'password' || type == 'number' || type == 'date') {
                 field.attr('value', value);
                 return true;
             }
