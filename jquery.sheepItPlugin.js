@@ -162,11 +162,11 @@
                     ,nameAttr = that.attr("name")
                     
                 /* Normalize field name attributes */
-                newNameAttr = nameTemplateAttr.replace(options.indexFormat, index);
+                var newNameAttr = nameTemplateAttr.replace(options.indexFormat, index);
                 that.attr("name", newNameAttr);
 
                 /* Normalize field id attributes */
-                newIdAttr = idTemplateAttr.replace(options.indexFormat, index);
+                var newIdAttr = idTemplateAttr.replace(options.indexFormat, index);
 
                 form.find("label[for='"+idAttr+"']").each(function(){
                         $(this).attr("for", newIdAttr);
