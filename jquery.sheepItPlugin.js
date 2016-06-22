@@ -1067,7 +1067,7 @@
 
         function fillFormField(field, value)
         {
-            var type = field.attr('type');
+            var type = field.prop('type');
 
             // hidden, text, password
             if (type == 'text' || type == 'hidden' || type == 'password') {
