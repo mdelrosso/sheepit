@@ -85,7 +85,7 @@
 
             // Before remove current callBack function
             if (typeof options.beforeRemoveCurrent === "function") {
-                options.beforeRemoveCurrent(source);
+                options.beforeRemoveCurrent(source, event);
             }
             
             if (options.removeCurrentConfirmation) {
@@ -98,7 +98,7 @@
             
             // After remove current callBack function
             if (typeof options.afterRemoveCurrent === "function") {
-                options.afterRemoveCurrent(source);
+                options.afterRemoveCurrent(source, event);
             }
         }
 
