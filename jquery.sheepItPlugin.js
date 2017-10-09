@@ -165,13 +165,15 @@
                 newNameAttr = nameTemplateAttr.replace(options.indexFormat, index);
                 that.attr("name", newNameAttr);
 
-                /* Normalize field id attributes */
-                newIdAttr = idTemplateAttr.replace(options.indexFormat, index);
-
-                form.find("label[for='"+idAttr+"']").each(function(){
-                        $(this).attr("for", newIdAttr);
-                    });
-                that.attr("id", newIdAttr);
+                if(typeof(newIdAttr)=='string'){
+                        /* Normalize field id attributes */
+                        newIdAttr = idTemplateAttr.replace(options.indexFormat, index);
+                        
+                        form.find("label[for='"+idAttr+"']").each(function(){
+                                $(this).attr("for", newIdAttr);
+                            });
+                        that.attr("id", newIdAttr);
+                }
             });
         }
 
