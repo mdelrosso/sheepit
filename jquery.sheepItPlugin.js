@@ -1031,7 +1031,7 @@
                                 fillFormField(fieldsToFill['fields'][x] , fieldsToFill['values'][x]);
                             }
                         } else {
-                            fillFormField( field.filter('[value="'+ value +'"]', value) );
+                            fillFormField( field.filter('[value="'+ value +'"]'), value );
                         }
                     } else {
                         if (mv) {
