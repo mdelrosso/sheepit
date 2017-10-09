@@ -497,8 +497,7 @@
             }
 
             if (canRemoveAllForms()) {
-                var x = [];
-                for (x in forms) {
+                for (x = 0; x < forms.length; x++) {
                     if (forms[x]) {
                         removeForm(forms[x]);
                     }
@@ -656,8 +655,7 @@
         {
             ip = false;
             if (forms.length > 0) {
-                var x = 0;
-                for (x in forms) {
+                for (x = 0; x < forms.length; x++) {
 
                     if (forms[x]) {
                         ip = x;
@@ -704,8 +702,7 @@
         {
             if (forms.length > 0) {
                 var count = 0;
-                var x = [];
-                for (x in forms) {
+                for (x = 0; x < forms.length; x++) {
                     if (forms[x] ) {
                         count++;
                     }
@@ -738,11 +735,10 @@
          */
         function getIndexForPosition(position)
         {
-            var x = 0;
             var count = 0;
             var index = false;
 
-            for (x in forms) {
+            for (x = 0; x < forms.length; x++) {
                 if (forms[x]) {
                     count++;
                     // get index for position
