@@ -160,11 +160,14 @@
                     ,nameTemplateAttr = getOrSetTemplate(that, "name")
                     ,idAttr = that.attr("id")
                     ,nameAttr = that.attr("name")
-                    
-                /* Normalize field name attributes */
-                newNameAttr = nameTemplateAttr.replace(options.indexFormat, index);
-                that.attr("name", newNameAttr);
-
+                 
+                if(typeof(newNameAttr)=='string'){    
+                	/* Normalize field name attributes */
+                	newNameAttr = nameTemplateAttr.replace(options.indexFormat, index);
+                	that.attr("name", newNameAttr);
+		}
+		
+		if(typeof(newIdAttr)=='string'){
                 /* Normalize field id attributes */
                 newIdAttr = idTemplateAttr.replace(options.indexFormat, index);
 
@@ -172,6 +175,7 @@
                         $(this).attr("for", newIdAttr);
                     });
                 that.attr("id", newIdAttr);
+		}
             });
         }
 
